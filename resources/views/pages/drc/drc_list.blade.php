@@ -25,7 +25,7 @@
                     {{-- <td hidden class="text-start">{{ $acordo->id }}</td> --}}
                     <td class="text-start">{{ $acordo->localizador_npj }}</td>
                     <td>{{ $acordo->tipo_recuperacao }}</td>
-                    <td>{{ $acordo->adverso_principal }}</td>
+                    <td class="txt-wrap">{{ $acordo->adverso_principal }}</td>
                     <td class="text-center">{{ $acordo->mci }}</td>
                     <td class="text-center">0</td>
                     <td class="text-start">{{ date("d/m/Y H:i", strtotime($acordo->updated_at)) }}</td>

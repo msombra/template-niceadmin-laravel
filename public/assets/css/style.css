@@ -1251,3 +1251,8 @@ textarea::placeholder {
 .uppercase {
     text-transform: uppercase;
 }
+
+.txt-wrap {
+    word-wrap: break-word;
+    white-space: normal;
+}
