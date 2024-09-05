@@ -19,7 +19,7 @@ Route::view('/', 'pages.index')->name('index');
 // DRC
 Route::controller(ControleAcordoController::class)->group(function() {
     // list
-    Route::get('/drc', 'list')->name('drc.list');
+    Route::get('/drc_list', 'list')->name('drc.list');
     // create
     Route::get('/drc_create', 'create')->name('drc.create');
     Route::post('/drc_store', 'store')->name('drc.store');
