@@ -4,16 +4,16 @@
     <x-form.form-layout action="drc.store" route-list="drc.list">
 
         {{-- Localizador (NPJ) --}}
-        <x-form.input label="Localizador (NPJ)" name="localizador_npj" type="text" max="11" numeric-input />
+        <x-form.input label="Localizador (NPJ)" name="localizador_npj" type="text" numeric-input />
 
         {{-- Adverso Principal --}}
         <x-form.input label="Adverso Principal" name="adverso_principal" type="text" col="5" />
 
         {{-- CPF/CNPJ --}}
-        <x-form.input label="CPF/CNPJ" name="cpf_cnpj" type="text" col="3" max="18" />
+        <x-form.input label="CPF/CNPJ" name="cpf_cnpj" type="text" col="3" />
 
         {{-- MCI --}}
-        <x-form.input label="MCI" name="mci" type="text" max="9" numeric-input />
+        <x-form.input label="MCI" name="mci" type="text" numeric-input />
 
         {{-- UF --}}
         <x-form.select label="UF" :name="$name = 'uf'">
@@ -29,10 +29,10 @@
         </x-form.select>
 
         {{-- GECOR --}}
-        <x-form.input label="GECOR" name="gecor" type="text" max="4" numeric-input />
+        <x-form.input label="GECOR" name="gecor" type="text" numeric-input />
 
         {{-- Prefixo (Dep.) --}}
-        <x-form.input label="Prefixo (Dep.)" name="prefixo_dependencia" type="text" max="4" numeric-input />
+        <x-form.input label="Prefixo (Dep.)" name="prefixo_dependencia" type="text" numeric-input />
 
         {{-- Tipo Recuperação --}}
         <x-form.select label="Tipo Recuperação" :name="$name = 'tipo_recuperacao'" col="3">
@@ -49,13 +49,13 @@
         </x-form.select>
 
         {{-- Rastreamento --}}
-        <x-form.input label="Rastreamento" name="rastreamento" type="text" max="14" numeric-input />
+        <x-form.input label="Rastreamento" name="rastreamento" type="text" numeric-input />
 
         {{-- Documentos Classificados --}}
         <x-form.select label="Docs. Classificados" :name="$name = 'documentos_classificados'" type-bool />
 
         {{-- Nº Compromisso --}}
-        <x-form.input label="Nº Compromisso" name="num_compromisso" type="text" max="12" numeric-input />
+        <x-form.input label="Nº Compromisso" name="num_compromisso" type="text" numeric-input />
 
         {{-- Condutor --}}
         <x-form.select label="Condutor" :name="$name = 'condutor'">
@@ -100,10 +100,10 @@
         <x-form.input label="Data Envio Subsídio" name="data_envio_subsidio" type="date" col="3" />
 
         {{-- Dep. Receptora --}}
-        <x-form.input label="Dep. Receptora" name="dependencia_receptora" type="text" max="14" />
+        <x-form.input label="Dep. Receptora" name="dependencia_receptora" type="text" />
 
         {{-- Formulário Rateio --}}
-        <x-form.input label="Formulário Rateio" name="formulario_rateio" type="text" max="14" />
+        <x-form.input label="Formulário Rateio" name="formulario_rateio" type="text" />
 
         {{-- Periodicidade --}}
         <x-form.select label="Periodicidade" :name="$name = 'periodicidade'">
@@ -127,7 +127,7 @@
         <x-form.input-money label="Saldo Devedor Atualizado" name="saldo_devedor_atualizado" col="3" />
 
         {{-- Percentual Honorários --}}
-        <x-form.input label="Percentual Hono." name="percentual_honorarios" type="text" max="7" />
+        <x-form.input label="Percentual Hono." name="percentual_honorarios" type="text" />
 
         {{-- Andamento --}}
         <x-form.select label="Andamento" :name="$name = 'andamento'" col="3">
