@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('controle_acordos', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('localizador_npj')->unique();
+            $table->string('localizador_npj', 11)->unique();
             $table->string('adverso_principal');
             $table->string('cpf_cnpj', 18);
             $table->string('mci', 9);

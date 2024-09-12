@@ -9,5 +9,7 @@ class Contrato extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['localizador_npj_id', 'contrato'];
+    public $table = 'controle_acordos_contratos';
+
+    protected $fillable = ['localizador_npj', 'contrato'];
 }

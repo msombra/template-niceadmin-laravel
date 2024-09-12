@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ControleAcordoController;
+use App\Http\Controllers\ContratoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,4 +33,9 @@ Route::controller(ControleAcordoController::class)->group(function() {
     Route::delete('/drc_destroy/{id}', 'destroy')->name('drc.destroy');
     // export
     Route::get('/drc_export', 'export')->name('drc.export');
+});
+// Mini-Crud Contratos
+Route::controller(ContratoController::class)->group(function() {
+    Route::post('/contrato_store', 'store')->name('contrato.store');
+    Route::get('/contrato_table', 'table')->name('contrato.table');
 });

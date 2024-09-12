@@ -13,16 +13,7 @@ return new class extends Migration
     {
         Schema::create('controle_acordos_contratos', function (Blueprint $table) {
             $table->id();
-            // ínicio do relacionamento
-            $table
-                ->unsignedBigInteger('localizador_npj_id');
-            $table
-                ->foreign('localizador_npj_id')
-                ->references('localizador_npj')
-                ->on('controle_acordos')
-                ->onDelete('cascade')
-                ->onUpdate('cascade');
-            // fim do relacionamento
+            $table->string('localizador_npj', 11);
             $table->string('contrato', 10);
             $table->timestamps();
         });
