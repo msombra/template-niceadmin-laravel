@@ -186,6 +186,7 @@ class ControleAcordoController extends Controller
         ];
 
         $obrigatorio = 'Campo obrigatório';
+        $max = 'Máximo :max dígitos';
         $min = 'Mínimo :min dígitos';
 
         $mensagens = [
@@ -200,6 +201,16 @@ class ControleAcordoController extends Controller
             'rastreamento.required'             => $obrigatorio,
             'documentos_classificados.required' => $obrigatorio,
             'valor_recuperacao.required'        => $obrigatorio,
+            // max
+            'localizador_npj.max'               => $max,
+            'adverso_principal.max'             => $max,
+            'cpf_cnpj.max'                      => $max,
+            'mci.max'                           => $max,
+            'gecor.max'                         => $max,
+            'rastreamento.max'                  => $max,
+            'num_compromisso.max'               => $max,
+            'dependencia_receptora.max'         => $max,
+            'formulario_rateio.max'             => $max,
             // min
             'localizador_npj.min'               => $min,
             'adverso_principal.min'             => $min,

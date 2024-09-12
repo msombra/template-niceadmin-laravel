@@ -13,6 +13,6 @@ class ControleAcordoSeeder extends Seeder
      */
     public function run(): void
     {
-        ControleAcordo::factory(20)->create();
+        ControleAcordo::factory(25)->create();
     }
 }
