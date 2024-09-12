@@ -22,6 +22,11 @@
             @endforeach
         </x-form.select>
 
+        {{-- Contratos --}}
+        <div class="col-md-2 d-flex flex-column align-self-end">
+            <button type="button" class="btn btn-sm btn-secondary" data-bs-toggle="modal" data-bs-target="#contratosModal">Contratos (0)</button>
+        </div>
+
         {{-- Fase Processual --}}
         <x-form.select label="Fase Processual" :name="$name = 'fase_processual'" col="3">
             <x-form.option value="PRÉ-PROCESSUAL" option="PRÉ-PROCESSUAL" :name="$name" />
@@ -141,6 +146,9 @@
 
     </x-form.form-layout>
     {{-- ===== End Form ===== --}}
+
+    {{-- Modal dos Contratos --}}
+    @include('includes.modal_contratos')
 
     {{-- ===== SCRIPTS ===== --}}
     @include('includes.script_form')
