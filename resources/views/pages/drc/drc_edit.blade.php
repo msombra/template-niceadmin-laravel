@@ -1,8 +1,4 @@
-<x-layout pagetitle="Editar Acordo">
-
-    <div>
-        {{ Session::get('attribute_error') }}
-    </div>
+<x-layout pagetitle="Editar Acordo" button-top-right="Exibir Histórico">
 
     {{-- ===== FORM ===== --}}
     <x-form.form-layout action="drc.update" :data-id="$acordo->id" route-list="drc.list">
@@ -145,6 +141,53 @@
 
     </x-form.form-layout>
     {{-- ===== End Form ===== --}}
+
+    {{-- ===== Modal Histórico ===== --}}
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Histórico de Alterações</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    @if ($historico->isNotEmpty())
+                        <table class="table table-bordered" style="font-size: 12px;">
+                            <thead>
+                                <tr>
+                                    <th>Campo</th>
+                                    <th>Valor Antigo</th>
+                                    <th>Novo Valor</th>
+                                    <th>Data</th>
+                                    <th>Hora</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($historico as $log)
+                                    @php
+                                        // Separando e formatando o valor da Data de Inserção
+                                        $dateTime = new DateTime($log->created_at);
+                                        $data = $dateTime->format('d/m/Y'); // traz a data separada
+                                        $hora = $dateTime->format('H:i'); // traz a hora separada
+                                    @endphp
+                                    <tr>
+                                        <td>{{ $camposAcordo[$log->campo] ?? $log->campo }}</td>
+                                        <td>{{ $log->valor_antigo }}</td>
+                                        <td>{{ $log->valor_novo }}</td>
+                                        <td>{{ $data }}</td>
+                                        <td>{{ $hora }}</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    @else
+                        Não existe histórico para esse acordo.
+                    @endif
+                </div>
+            </div>
+        </div>
+    </div>
+    {{-- ===== End Modal Histórico ===== --}}
 
     {{-- ===== SCRIPTS ===== --}}
     @include('includes.script_form')
