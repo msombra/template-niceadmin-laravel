@@ -38,4 +38,7 @@ Route::controller(ControleAcordoController::class)->group(function() {
 Route::controller(ContratoController::class)->group(function() {
     Route::post('/contrato_store', 'store')->name('contrato.store');
     Route::get('/contrato_list', 'list')->name('contrato.list');
+    // Route::get('/contrato_edit/{id}', 'edit')->name('contrato.edit');
+    Route::post('/contrato_update', 'update')->name('contrato.update');
+    Route::delete('/contrato_destroy', 'destroy')->name('contrato.destroy');
 });

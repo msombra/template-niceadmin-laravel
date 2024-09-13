@@ -71,12 +71,32 @@
 
                             if(qtdContratos > 0) {
                                 for(let i=0; i < qtdContratos; i++) {
-                                    $('#listaContratos').append(`<tr>
-                                        <td>${(contratos[i]['contrato'])}</td>
-                                        <td class='text-center'>teste</td>
-                                    </tr>`)
+                                    $('#listaContratos').append(`
+                                        <tr>
+                                            <td>${(contratos[i]['contrato'])}</td>
+                                            <td class='text-center'>
+                                                <div class="d-flex justify-content-center align-items-center">
+                                                    <button type="button" class="contrato-edit contrato-buttons-crud text-primary fs-6" title="Editar contrato"><i class="fa fa-pencil"></i></button>
+                                                    <form action="#" method="post">
+                                                        @method('delete')
+                                                        @csrf
+                                                        <button type="submit" class="contrato-buttons-crud text-danger fs-6" title="Deletar contrato" onclick="return confirm('Deseja excluir esse contrato?')">
+                                                            <i class="bi bi-trash"></i>
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    `)
                                 }
                             }
+
+                            $('.contrato-edit').click(function() {
+                                let contrato = $(this).closest('tr').find('td:first').text()
+
+                                $('#contrato').val(contrato)
+                                $('#inserirContrato').text('Editar')
+                            })
                         },
                         error: function(err) {
                             console.log(err.responseText)
@@ -119,8 +139,18 @@
                         }
                     })
                 })
+
             })
 
         })
     </script>
+@endpush
+
+@push('plugin_css')
+    <style>
+        .contrato-buttons-crud {
+            background: transparent;
+            border: none;
+        }
+    </style>
 @endpush
