@@ -11,7 +11,7 @@
                 <div class="mb-3 row">
                   <div class="col-md-8">
                     <label for="contrato" class="form-label custom-label">Contrato</label>
-                    <input type="text" id="contrato" name="contrato" class="form-control form-control-sm">
+                    <input type="text" id="contrato" name="contrato" class="form-control form-control-sm numeric-input" placeholder="Preencha o campo">
                     <input hidden type="text" id="contratoLocalizadorNpj" name="localizador_npj" class="numeric-input">
                   </div>
                   <div class="col-md-2 d-flex align-self-end">
@@ -25,22 +25,15 @@
         </div>
         <div class="modal-footer">
           <table id="contratosTable" class="table table-sm table-hover text-nowrap" style="font-size: 13px;">
-            <tr>
-                <th class="text-center">Contrato</th>
-                <th class="text-center">Ações</th>
-            </tr>
-            {{-- <thead>
+            <thead>
                 <tr>
                     <th class="text-center">Contrato</th>
                     <th class="text-center">Ações</th>
                 </tr>
             </thead>
-            <tbody>
-                <tr>
-                    <td id="output" class="text-center">1</td>
-                    <td class="text-center">2</td>
-                </tr>
-            </tbody> --}}
+            <tbody id="listaContratos">
+                {{-- Aqui carrega os contratos via ajax --}}
+            </tbody>
           </table>
         </div>
       </div>
@@ -53,12 +46,46 @@
             $(function() {
                 $('#localizador_npj').change(function() {
                     let value = $(this).val()
-                    
+
+                    if(value.length === 11) {
+                        $('#btnContratos').prop('disabled', false)
+                    } else {
+                        $('#btnContratos').prop('disabled', true)
+                    }
+
                     $('#contratoLocalizadorNpj').val(value)
                 })
             })
 
             $(function() {
+                function carregaContratos() {
+                    $.ajax({
+                        type: "GET",
+                        url: "{{ route('contrato.list') }}",
+                        success: function(data) {
+                            let npj = $('#localizador_npj').val()
+                            let contratos = data.contratos.filter(item => item.localizador_npj === npj)
+                            let qtdContratos = contratos.length
+
+                            $('#listaContratos').empty()
+
+                            if(qtdContratos > 0) {
+                                for(let i=0; i < qtdContratos; i++) {
+                                    $('#listaContratos').append(`<tr>
+                                        <td>${(contratos[i]['contrato'])}</td>
+                                        <td class='text-center'>teste</td>
+                                    </tr>`)
+                                }
+                            }
+                        },
+                        error: function(err) {
+                            console.log(err.responseText)
+                        }
+                    })
+                }
+
+                carregaContratos()
+
                 $('#contratosForm').submit(function(e) {
                     e.preventDefault()
 
@@ -75,6 +102,7 @@
                         button.prop('disabled', false)
                         $('#inserirContrato').removeClass('d-none')
                         $('#spinnerContrato').addClass('d-none')
+                        carregaContratos()
                     }
 
                     $.ajax({
@@ -84,40 +112,15 @@
                         processData: false,
                         contentType: false,
                         success: function(data) {
-                            //$('#output').text(data.response)
                             afterProcessing()
                         },
                         error: function(err) {
-                            //$('#output').text('falhou')
                             afterProcessing()
                         }
                     })
                 })
             })
 
-            $(function() {
-                $.ajax({
-                    type: "GET",
-                    url: "{{ route('contrato.table') }}",
-                    success: function(data) {
-                        console.log(data)
-                        let qtdContratos = data.contratos.length
-
-                        if(qtdContratos > 0) {
-                            for(let i=0; i < qtdContratos; i++) {
-                                $('#contratosTable').append(`<tr>
-                                    <td>${(qtdContratos[i]['contrato'])}</td>
-                                </tr>`)
-                            }
-                        } else {
-
-                        }
-                    },
-                    error: function(err) {
-                        console.log(err.responseText)
-                    }
-                })
-            })
         })
     </script>
 @endpush

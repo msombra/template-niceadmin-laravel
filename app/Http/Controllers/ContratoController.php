@@ -14,7 +14,7 @@ class ContratoController extends Controller
         return response()->json(['response' => 'deu bom']);
     }
 
-    public function table()
+    public function list()
     {
         $contratos = Contrato::all();
 

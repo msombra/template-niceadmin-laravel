@@ -24,7 +24,7 @@
 
         {{-- Contratos --}}
         <div class="col-md-2 d-flex flex-column align-self-end">
-            <button type="button" class="btn btn-sm btn-secondary" data-bs-toggle="modal" data-bs-target="#contratosModal">Contratos (0)</button>
+            <button type="button" id="btnContratos" class="btn btn-sm btn-secondary" data-bs-toggle="modal" data-bs-target="#contratosModal" disabled>Contratos (0)</button>
         </div>
 
         {{-- Fase Processual --}}

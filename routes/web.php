@@ -37,5 +37,5 @@ Route::controller(ControleAcordoController::class)->group(function() {
 // Mini-Crud Contratos
 Route::controller(ContratoController::class)->group(function() {
     Route::post('/contrato_store', 'store')->name('contrato.store');
-    Route::get('/contrato_table', 'table')->name('contrato.table');
+    Route::get('/contrato_list', 'list')->name('contrato.list');
 });
