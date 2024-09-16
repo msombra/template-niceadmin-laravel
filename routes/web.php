@@ -34,7 +34,8 @@ Route::controller(ControleAcordoController::class)->group(function() {
     // export
     Route::get('/drc_export', 'export')->name('drc.export');
 });
-// Mini-Crud Contratos
+
+// DRC - Mini-Crud Contratos
 Route::controller(ContratoController::class)->group(function() {
     Route::get('/contrato_list', 'list')->name('contrato.list');
     Route::post('/contrato_store', 'store')->name('contrato.store');

@@ -136,11 +136,22 @@
             @endforeach
         </x-form.select>
 
+        {{-- Contratos --}}
+        <div class="col-md-2 d-flex flex-column align-self-end">
+            @php $condicao = $qtdContratos == 0 @endphp
+            <button type="button" id="btnContratos" class="btn btn-sm btn-{{ $condicao ? 'secondary' : 'success' }}" data-bs-toggle="modal" data-bs-target="#contratosModal" title="Clique para visualizar ou inserir contrato" @if($condicao) disabled @endif>
+                Contratos ({{ $qtdContratos }})
+            </button>
+        </div>
+
         {{-- Observações --}}
         <x-form.textarea :value="$acordo->observacao" label="Observações" name="observacao" col="12" placeholder="Protocolo realizado como processo apenso" />
 
     </x-form.form-show-layout>
     {{-- ===== End Form ===== --}}
+
+    {{-- Modal dos Contratos --}}
+    @include('includes.modal_contratos_view')
 
     {{-- ===== SCRIPTS ===== --}}
     @include('includes.script_form')

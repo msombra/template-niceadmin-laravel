@@ -6,6 +6,7 @@ use App\Exports\DrcExport;
 use Illuminate\Http\Request;
 use App\Models\Auxiliares\Uf;
 use App\Models\ControleAcordo;
+use App\Models\Contrato;
 use App\Models\Auxiliares\Status;
 use Illuminate\Support\Facades\DB;
 use App\Models\Auxiliares\Condutor;
@@ -107,7 +108,10 @@ class ControleAcordoController extends Controller
 
         $tabelasAux = $this->tabelasAux();
 
-        return view('pages.drc.drc_show', compact('acordo'), $tabelasAux);
+        $contratos = Contrato::where('localizador_npj', $acordo->localizador_npj)->get();
+        $qtdContratos = $contratos->count();
+
+        return view('pages.drc.drc_show', compact('acordo', 'contratos', 'qtdContratos'), $tabelasAux);
     }
 
     public function destroy($id)
