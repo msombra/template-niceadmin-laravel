@@ -22,11 +22,6 @@
             @endforeach
         </x-form.select>
 
-        {{-- Contratos --}}
-        <div class="col-md-2 d-flex flex-column align-self-end">
-            <button type="button" id="btnContratos" class="btn btn-sm btn-secondary" data-bs-toggle="modal" data-bs-target="#contratosModal" disabled>Contratos (0)</button>
-        </div>
-
         {{-- Fase Processual --}}
         <x-form.select label="Fase Processual" :name="$name = 'fase_processual'" col="3">
             <x-form.option value="PRÉ-PROCESSUAL" option="PRÉ-PROCESSUAL" :name="$name" />
@@ -141,6 +136,11 @@
             @endforeach
         </x-form.select>
 
+        {{-- Contratos --}}
+        <div class="col-md-2 d-flex flex-column align-self-end">
+            <button type="button" id="btnContratos" class="btn btn-sm btn-secondary" data-bs-toggle="modal" data-bs-target="#contratosModal" title="Clique para visualizar ou inserir contrato" disabled>Contratos (<span id="qtdContratos"></span>)</button>
+        </div>
+
         {{-- Observações --}}
         <x-form.textarea label="Observações" name="observacao" col="12" placeholder="Protocolo realizado como processo apenso" />
 
@@ -154,6 +154,7 @@
     @include('includes.script_form')
     @push('js')
         <script src="{{ asset('assets/js/drc/drc_form.js') }}"></script>
+        <script src="{{ asset('assets/js/drc/crud_contrato.js') }}"></script>
     @endpush
 </x-layout>
 

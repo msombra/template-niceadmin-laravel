@@ -4,6 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    @stack('meta')
 
     <title>SUIT BB - DRC</title>
     <meta content="" name="description">
@@ -29,6 +30,8 @@
 
     <!-- Template Main CSS File -->
     <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
+
+    @stack('css')
 
     <!-- Jquery -->
     <script src="{{ asset('plugins/jquery/jquery-3.7.1.min.js') }}"></script>

@@ -1,4 +1,4 @@
-<form method="post" class="row gy-4 gx-3" action="{{ route($action, $dataId ?? null) }}">
+<form id="form" method="post" class="row gy-4 gx-3" action="{{ route($action, $dataId ?? null) }}">
     {{-- token --}}
     @csrf
 

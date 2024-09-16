@@ -1,7 +1,7 @@
 $(document).ready(function() {
     // funções que serão aplicadas no momento que os dados forem enviados para o servidor
     $(function() {
-        $('form').submit(function() {
+        $('#form').submit(function() {
             // remove o botão de voltar
             let btnVoltar = $('#buttons').find('a')
             btnVoltar.addClass('d-none')

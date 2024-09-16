@@ -140,11 +140,19 @@
             @endforeach
         </x-form.select>
 
+        {{-- Contratos --}}
+        <div class="col-md-2 d-flex flex-column align-self-end">
+            <button type="button" id="btnContratos" class="btn btn-sm btn-secondary" data-bs-toggle="modal" data-bs-target="#contratosModal" title="Clique para visualizar ou inserir contrato" disabled>Contratos (<span id="qtdContratos"></span>)</button>
+        </div>
+
         {{-- Observações --}}
         <x-form.textarea :value="$acordo->observacao" label="Observações" name="observacao" col="12" placeholder="Protocolo realizado como processo apenso" />
 
     </x-form.form-layout>
     {{-- ===== End Form ===== --}}
+
+    {{-- Modal dos Contratos --}}
+    @include('includes.modal_contratos')
 
     {{-- ===== SCRIPTS ===== --}}
     @include('includes.script_form')
