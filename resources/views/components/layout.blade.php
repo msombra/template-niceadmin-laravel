@@ -2,11 +2,11 @@
     <main id="main" class="main flex-grow-1">
 
         <div class="pagetitle d-flex justify-content-between">
-        
+
             <h1>{{ $pagetitle }}</h1>
 
             @isset($buttonTopRight)
-                <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#historicoModal">
                     {{ $buttonTopRight }}
                 </button>
             @endisset

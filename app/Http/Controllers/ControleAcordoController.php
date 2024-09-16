@@ -24,20 +24,8 @@ class ControleAcordoController extends Controller
     // =====================================================
     public function list()
     {
-        // $acordos = DB::table('controle_acordos as ca')
-        // ->select(
-        //     'ca.id',
-        //     'localizador_npj',
-        //     'tp.nome as tipo_recuperacao',
-        //     'adverso_principal',
-        //     'mci',
-        //     'updated_at'
-        // )
-        // ->join('controle_acordos_tipo_recuperacao_aux as tp', 'tipo_recuperacao', 'tp.id')
-        // ->get();
         $acordos = ControleAcordo::with('tipoRecuperacaoAux')->get();
-        // dd($acordos);
-// dd(ControleAcordo::with('ufAux')->get());
+
         return view('pages.drc.drc_list', compact('acordos'));
     }
 
