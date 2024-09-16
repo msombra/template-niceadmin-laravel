@@ -4,6 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Auxiliares\Uf;
+use App\Models\Auxiliares\TipoRecuperacao;
+use App\Models\Auxiliares\Status;
+use App\Models\Auxiliares\Condutor;
+use App\Models\Auxiliares\Andamento;
+use App\Models\Auxiliares\Classificacao;
+use App\Models\Auxiliares\FormaPagamento;
 
 class ControleAcordo extends Model
 {
@@ -45,6 +52,42 @@ class ControleAcordo extends Model
         'andamento',
         'observacao'
     ];
+
+    // RELACIONAMENTOS
+    public function ufAux()
+    {
+        return $this->belongsTo(Uf::class, 'uf');
+    }
+
+    public function tipoRecuperacaoAux()
+    {
+        return $this->belongsTo(TipoRecuperacao::class, 'tipo_recuperacao');
+    }
+
+    public function statusAux()
+    {
+        return $this->belongsTo(Status::class, 'status');
+    }
+
+    public function condutorAux()
+    {
+        return $this->belongsTo(Condutor::class, 'condutor');
+    }
+
+    public function andamentoAux()
+    {
+        return $this->belongsTo(Andamento::class, 'andamento');
+    }
+
+    public function classificacaoAux()
+    {
+        return $this->belongsTo(Classificacao::class, 'classificacao');
+    }
+
+    public function formaPagamentoAux()
+    {
+        return $this->belongsTo(FormaPagamento::class, 'forma_pagamento');
+    }
 
     public function setAdversoPrincipalAttribute($value)
     {

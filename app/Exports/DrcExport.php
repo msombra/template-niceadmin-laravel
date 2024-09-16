@@ -10,11 +10,13 @@ use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Concerns\WithStyles;
 use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Concerns\WithHeadings;
+use Maatwebsite\Excel\Concerns\WithTitle;
 use PhpOffice\PhpSpreadsheet\Style\Alignment;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
+use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 
-class DrcExport implements FromCollection, WithHeadings, WithStyles, WithMapping, WithEvents
+class DrcExport implements FromCollection, WithTitle, WithHeadings, WithStyles, WithMapping, WithEvents
 {
     /**
     * @return \Illuminate\Support\Collection
@@ -22,51 +24,15 @@ class DrcExport implements FromCollection, WithHeadings, WithStyles, WithMapping
     // Buscando os dados que serão exibidos na planilha
     public function collection()
     {
-        return DB::table('controle_acordos as ca')
-        ->select(
-            'ca.id',
-            'localizador_npj',
-            'adverso_principal',
-            'cpf_cnpj',
-            'mci',
-            'uf.sigla as uf',
-            'fase_processual',
-            'gecor',
-            'prefixo_dependencia',
-            'tp.nome as tipo_recuperacao',
-            'cf.nome as classificacao',
-            'rastreamento',
-            'documentos_classificados',
-            'num_compromisso',
-            'cd.nome as condutor',
-            'fp.nome as forma_pagamento',
-            'valor_honorarios',
-            'valor_recuperacao',
-            'st.nome as status',
-            'data_vencimento',
-            'data_pagamento',
-            'data_protocolo',
-            'data_final_vencimento',
-            'data_envio_subsidio',
-            'dependencia_receptora',
-            'formulario_rateio',
-            'periodicidade',
-            'qtd_parcelas',
-            'valor_parcela',
-            'vencimento_primeira_parcela',
-            'valor_entrada',
-            'saldo_devedor_atualizado',
-            'percentual_honorarios',
-            'and.nome as andamento',
-            'observacao'
+        return ControleAcordo::with(
+            'ufAux',
+            'tipoRecuperacaoAux',
+            'statusAux',
+            'condutorAux',
+            'andamentoAux',
+            'classificacaoAux',
+            'formaPagamentoAux'
         )
-        ->join('uf_aux as uf', 'uf', 'uf.id')
-        ->join('controle_acordos_tipo_recuperacao_aux as tp', 'tipo_recuperacao', 'tp.id')
-        ->join('controle_acordos_classificacao_aux as cf', 'classificacao', 'cf.id')
-        ->leftJoin('controle_acordos_condutor_aux as cd', 'condutor', 'cd.id')
-        ->leftJoin('controle_acordos_forma_pagamento_aux as fp', 'forma_pagamento', 'fp.id')
-        ->leftJoin('controle_acordos_status_aux as st', 'status', 'st.id')
-        ->leftJoin('controle_acordos_andamento_aux as and', 'andamento', 'and.id')
         ->orderBy('updated_at', 'desc')
         ->get();
     }
@@ -75,6 +41,12 @@ class DrcExport implements FromCollection, WithHeadings, WithStyles, WithMapping
     private function formatDate($value)
     {
         return Carbon::parse($value)->format('d/m/Y');
+    }
+
+    // Definindo o nome da aba
+    public function title(): string
+    {
+        return 'Plan1';
     }
 
     // Defindo os cabeçalhos das colunas
@@ -149,20 +121,20 @@ class DrcExport implements FromCollection, WithHeadings, WithStyles, WithMapping
             $acordo->adverso_principal,
             $acordo->cpf_cnpj,
             $acordo->mci,
-            $acordo->uf,
+            $acordo->ufAux->sigla,
             $acordo->fase_processual,
             $acordo->gecor,
             $acordo->prefixo_dependencia,
-            $acordo->tipo_recuperacao,
-            $acordo->classificacao,
+            $acordo->tipoRecuperacaoAux->nome,
+            $acordo->classificacaoAux->nome,
             $acordo->rastreamento,
             $acordo->documentos_classificados ? 'SIM' : 'NÃO',
             $acordo->num_compromisso,
-            $acordo->condutor,
-            $acordo->forma_pagamento,
+            $acordo->condutorAux->nome,
+            $acordo->formaPagamentoAux->nome,
             $acordo->valor_honorarios,
             $acordo->valor_recuperacao,
-            $acordo->status,
+            $acordo->statusAux->nome,
             $this->formatDate($acordo->data_vencimento),
             $this->formatDate($acordo->data_pagamento),
             $this->formatDate($acordo->data_protocolo),
@@ -177,7 +149,7 @@ class DrcExport implements FromCollection, WithHeadings, WithStyles, WithMapping
             $acordo->valor_entrada,
             $acordo->saldo_devedor_atualizado,
             $acordo->percentual_honorarios,
-            $acordo->andamento,
+            $acordo->andamentoAux->nome,
             $acordo->observacao,
         ];
     }
@@ -188,15 +160,26 @@ class DrcExport implements FromCollection, WithHeadings, WithStyles, WithMapping
         return [
             AfterSheet::class => function(AfterSheet $event) {
                 $sheet = $event->sheet->getDelegate();
+                $line = $sheet->getHighestRow();
 
                 // centralizar todas as colunas
-                $sheet->getStyle('A1:AG' . $sheet->getHighestRow())
-                      ->getAlignment()
-                      ->setHorizontal(Alignment::HORIZONTAL_CENTER);
+                $sheet
+                    ->getStyle('A1:AG' . $line)
+                    ->getAlignment()
+                    ->setHorizontal(Alignment::HORIZONTAL_CENTER);
 
                 // ajuste de largura automático para todas as colunas
                 for ($col = 'A'; $col <= 'Z'; $col++) {
                     $sheet->getColumnDimension($col)->setAutoSize(true);
+                }
+
+                // aplicar formato de texto às colunas específicas
+                $textColumns = ['K2:k', 'M2:m', 'X2:x', 'W2:w']; // ajuste os índices das colunas conforme necessário
+                foreach ($textColumns as $col) {
+                    $sheet
+                        ->getStyle($col . $line)
+                        ->getNumberFormat()
+                        ->setFormatCode(NumberFormat::FORMAT_TEXT);
                 }
             }
         ];
