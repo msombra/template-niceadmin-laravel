@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('controle_acordos_historico', function (Blueprint $table) {
             $table->id();
             $table->string('model'); // O nome do modelo que sofreu alteração
-            $table->integer('model_id'); // O ID do modelo alterado
+            $table->unsignedBigInteger('model_id'); // O ID do modelo alterado
             $table->string('campo'); // Nome do campo alterado
             $table->text('valor_antigo')->nullable(); // Valor antigo
             $table->text('valor_novo')->nullable(); // Novo valor

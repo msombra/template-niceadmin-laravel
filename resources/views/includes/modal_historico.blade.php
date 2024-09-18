@@ -1,12 +1,12 @@
 <div class="modal fade" id="historicoModal" tabindex="-1" aria-labelledby="historicoModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h1 class="modal-title fs-5" id="historicoModalLabel">Histórico de Alterações</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
-                @if ($historico->isNotEmpty())
+            <div class="modal-body" style="max-height: 80vh; overflow-y: auto">
+                @if ($historico->isNotEmpty() || $contratoHistorico->isNotEmpty())
                     <table class="table table-bordered" style="font-size: 12px;">
                         <thead>
                             <tr>
@@ -18,19 +18,30 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($historico as $log)
-                                @php
-                                    // Separando e formatando o valor da Data de Inserção
-                                    $dateTime = new DateTime($log->created_at);
+                            @php
+                                // Separando e formatando o valor da Data de Inserção
+                                function dateTime($value) {
+                                    $dateTime = new DateTime($value);
                                     $dataInsert = $dateTime->format('d/m/Y'); // traz a data separada
                                     $horaInsert = $dateTime->format('H:i'); // traz a hora separada
-                                @endphp
+
+                                    echo "<td>$dataInsert</td>\n<td>$horaInsert</td>";
+                                }
+                            @endphp
+                            @foreach ($historico as $log)
                                 <tr>
-                                    <td>{{ $camposAcordo[$log->campo] ?? $log->campo }}</td>
+                                    <td>{{ $log->campo }}</td>
                                     <td>{{ $log->valor_antigo }}</td>
                                     <td>{{ $log->valor_novo }}</td>
-                                    <td>{{ $dataInsert }}</td>
-                                    <td>{{ $horaInsert }}</td>
+                                    {{ dateTime($log->created_at) }}
+                                </tr>
+                            @endforeach
+                            @foreach ($contratoHistorico as $log)
+                                <tr>
+                                    <td>{{ $log->campo }}</td>
+                                    <td>{{ $log->valor_antigo }}</td>
+                                    <td>{{ $log->valor_novo }}</td>
+                                    {{ dateTime($log->created_at) }}
                                 </tr>
                             @endforeach
                         </tbody>

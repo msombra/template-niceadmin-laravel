@@ -63,52 +63,20 @@ class ControleAcordoController extends Controller
             return redirect()->back();
         }
 
-        $camposAcordo = [
-            'localizador_npj'               => 'Localizador (NPJ)',
-            'adverso_principal'             => 'Adverso Principal',
-            'cpf_cnpj'                      => 'CPF/CNPJ',
-            'mci'                           => 'MCI',
-            'uf'                            => 'UF',
-            'fase_processual'               => 'Fase Processual',
-            'gecor'                         => 'GECOR',
-            'prefixo_dependencia'           => 'Prefixo (Dep.)',
-            'tipo_recuperacao'              => 'Tipo Recuperação',
-            'classificacao'                 => 'Classificação',
-            'rastreamento'                  => 'Rastreamento',
-            'documentos_classificados'      => 'Documentos Classificados',
-            'num_compromisso'               => 'Nº Compromisso',
-            'condutor'                      => 'Condutor',
-            'forma_pagamento'               => 'Forma Pagamento',
-            'valor_honorarios'              => 'Valor Honorários',
-            'valor_recuperacao'             => 'Valor Recuperação',
-            'status'                        => 'Status',
-            'data_vencimento'               => 'Data Vencimento',
-            'data_pagamento'                => 'Data Pagamento',
-            'data_protocolo'                => 'Data Protocolo',
-            'data_final_vencimento'         => 'Data Final Vencimento',
-            'data_envio_subsidio'           => 'Data Envio Subsídio',
-            'dependencia_receptora'         => 'Dependência Receptora',
-            'formulario_rateio'             => 'Formulário Rateio',
-            'periodicidade'                 => 'Periodicidade',
-            'qtd_parcelas'                  => 'Quantidade de Parcelas',
-            'valor_parcela'                 => 'Valor Parcela',
-            'vencimento_primeira_parcela'   => 'Vencimento 1º Parcela',
-            'valor_entrada'                 => 'Valor Entrada',
-            'saldo_devedor_atualizado'      => 'Saldo Devedor Atualizado',
-            'percentual_honorarios'         => 'Percentual Honorários',
-            'andamento'                     => 'Andamento',
-            'observacao'                    => 'Observação'
-        ];
-
         // Buscar o histórico de alterações para esse registro
         $historico = ControleAcordoHistorico::where('model', ControleAcordo::class)
                                             ->where('model_id', $id)
                                             ->orderBy('created_at', 'desc')
                                             ->get();
 
+        $contratoHistorico = ControleAcordoHistorico::where('model', Contrato::class)
+                                            ->where('model_id', $acordo->localizador_npj)
+                                            ->orderBy('created_at', 'desc')
+                                            ->get();
+
         $tabelasAux = $this->tabelasAux();
 
-        return view('pages.drc.drc_edit', compact('acordo', 'historico', 'camposAcordo'), $tabelasAux);
+        return view('pages.drc.drc_edit', compact('acordo', 'historico', 'contratoHistorico'), $tabelasAux);
     }
 
     public function update(Request $request, $id)
@@ -157,6 +125,9 @@ class ControleAcordoController extends Controller
         }
 
         $acordo->delete();
+
+        // Deleta todos os contratos que tem relação ao ID removido
+        Contrato::where('localizador_npj', $acordo->localizador_npj)->delete();
 
         return redirect()->route('drc.list')->with('success', 'Acordo removido com sucesso');
     }
