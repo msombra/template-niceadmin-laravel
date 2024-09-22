@@ -154,7 +154,6 @@
     @include('includes.script_form')
     @push('js')
         <script src="{{ asset('assets/js/drc/drc_form.js') }}"></script>
-        <script src="{{ asset('assets/js/drc/crud_contrato.js') }}"></script>
     @endpush
 </x-layout>
 
