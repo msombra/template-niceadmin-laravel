@@ -85,11 +85,11 @@
                                             <td class='text-center'>
                                                 <div class="d-flex justify-content-center align-items-center">
 
-                                                    <button type="button" data-id="${(contratos[i]['id'])}" data-contrato="${(contratos[i]['contrato'])}" class="contrato-edit contrato-buttons-crud text-primary fs-6" title="Clique para editar o contrato">
+                                                    <button type="button" data-id="${(contratos[i]['id'])}" data-contrato="${(contratos[i]['contrato'])}" class="contrato-edit btn-reset text-primary fs-6" title="Clique para editar o contrato">
                                                         <i class="fa fa-pencil"></i>
                                                     </button>
 
-                                                    <button type="button" data-id="${(contratos[i]['id'])}" class="contrato-delete contrato-buttons-crud text-danger fs-6" title="Clique para remover o contrato">
+                                                    <button type="button" data-id="${(contratos[i]['id'])}" class="contrato-delete btn-reset text-danger fs-6" title="Clique para remover o contrato">
                                                             <i class="fa fa-minus-circle"></i>
                                                     </button>
 
@@ -264,11 +264,6 @@
 
 @push('css')
     <style>
-        .contrato-buttons-crud {
-            background: transparent;
-            border: none;
-        }
-
         .custom-table {
             font-size: 13px;
             max-height: 30vh;

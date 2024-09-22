@@ -1256,3 +1256,8 @@ textarea::placeholder {
     word-wrap: break-word;
     white-space: normal;
 }
+
+.btn-reset {
+    background: transparent;
+    border: none;
+}
