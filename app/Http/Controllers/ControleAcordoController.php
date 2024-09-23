@@ -58,6 +58,7 @@ class ControleAcordoController extends Controller
     public function edit(Request $request, $id)
     {
         $acordo = ControleAcordo::find($id);
+        // dd($c, $u);
 
         if(!$acordo) {
             return redirect()->back();
@@ -65,14 +66,14 @@ class ControleAcordoController extends Controller
 
         // Buscar o histórico de alterações para esse registro
         $historico = ControleAcordoHistorico::where('model', ControleAcordo::class)
-                                            ->where('model_id', $id)
-                                            ->orderBy('created_at', 'desc')
-                                            ->get();
+            ->where('model_id', $id)
+            ->orderBy('created_at', 'desc')
+            ->get();
 
         $contratoHistorico = ControleAcordoHistorico::where('model', Contrato::class)
-                                            ->where('model_id', $acordo->localizador_npj)
-                                            ->orderBy('created_at', 'desc')
-                                            ->get();
+            ->where('model_id', $acordo->localizador_npj)
+            ->orderBy('created_at', 'desc')
+            ->get();
 
         $tabelasAux = $this->tabelasAux();
 

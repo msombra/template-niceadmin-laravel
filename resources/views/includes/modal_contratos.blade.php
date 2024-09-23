@@ -122,6 +122,7 @@
                     const typeButton = $('#contratoSubmitText').text()
                     let contrato = $('#contrato').val()
                     let npj = $('#localizador_npj').val()
+                    let responsavel = $('#responsavel').val()
                     let token = $('meta[name="csrf-token"]').attr('content')
 
                     function contratoSubmit(boolValue) {
@@ -163,6 +164,7 @@
                                 data: {
                                     contrato: contrato,
                                     localizador_npj: npj,
+                                    responsavel: responsavel,
                                     _token: token
                                 },
                                 success: function(data) {
@@ -192,6 +194,7 @@
                                     id: id,
                                     contrato: contrato,
                                     localizador_npj: npj,
+                                    responsavel: responsavel,
                                     _token: token
                                 },
                                 success: function(data) {

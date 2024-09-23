@@ -20,6 +20,7 @@
                             <th id="colCampo">Campo</th>
                             <th>Valor Antigo</th>
                             <th>Novo Valor</th>
+                            <th>Responsável</th>
                             <th>Data</th>
                             <th>Hora</th>
                         </tr>
@@ -43,6 +44,7 @@
                                     <td>{{ $log->campo }}</td>
                                     <td>{{ $log->valor_antigo }}</td>
                                     <td>{{ $log->valor_novo }}</td>
+                                    <td>{{ $log->responsavel }}</td>
                                     {{ dateTime($log->created_at) }}
                                 </tr>
                             @endforeach
@@ -61,6 +63,7 @@
                                 <tr class="contrato-historico-table d-none">
                                     <td>{{ $log->valor_antigo }}</td>
                                     <td>{{ $log->valor_novo }}</td>
+                                    <td>{{ $log->responsavel }}</td>
                                     {{ dateTime($log->created_at) }}
                                 </tr>
                             @endforeach

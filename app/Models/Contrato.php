@@ -11,5 +11,5 @@ class Contrato extends Model
 
     public $table = 'controle_acordos_contratos';
 
-    protected $fillable = ['localizador_npj', 'contrato'];
+    protected $fillable = ['localizador_npj', 'contrato', 'responsavel'];
 }

@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -50,7 +51,8 @@ class ControleAcordoFactory extends Factory
             'saldo_devedor_atualizado' => $this->faker->randomFloat(2, 0, 10000),
             'percentual_honorarios' => $this->faker->randomFloat(2, 0, 100) . '%',
             'andamento' => $this->faker->numberBetween(1, 4),
-            'observacao' => $this->faker->text
+            'observacao' => $this->faker->text,
+            'responsavel' => $this->faker->name
         ];
     }
 }

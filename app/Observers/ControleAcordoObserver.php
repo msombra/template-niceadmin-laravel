@@ -2,16 +2,17 @@
 
 namespace App\Observers;
 
-use App\Models\ControleAcordo;
-use App\Models\ControleAcordoHistorico;
 use App\Models\Auxiliares\Uf;
-use App\Models\Auxiliares\TipoRecuperacao;
+use App\Models\ControleAcordo;
+use Illuminate\Support\Carbon;
 use App\Models\Auxiliares\Status;
 use App\Models\Auxiliares\Condutor;
 use App\Models\Auxiliares\Andamento;
+use Illuminate\Support\Facades\Auth;
+use App\Models\ControleAcordoHistorico;
 use App\Models\Auxiliares\Classificacao;
 use App\Models\Auxiliares\FormaPagamento;
-use Illuminate\Support\Carbon;
+use App\Models\Auxiliares\TipoRecuperacao;
 
 class ControleAcordoObserver
 {
@@ -162,13 +163,16 @@ class ControleAcordoObserver
             // dd($valorNovo, $valorAntigo); // debug
 
             // Salva no log
-            ControleAcordoHistorico::create([
-                'model'         => ControleAcordo::class, // Nome do modelo
-                'model_id'      => $model->id, // ID do registro alterado
-                'campo'         => $campo, // Nome do campo
-                'valor_antigo'  => $valorAntigo, // Valor antigo
-                'valor_novo'    => $valorNovo, // Novo valor
-            ]);
+            if($campo !== 'responsavel') {
+                ControleAcordoHistorico::create([
+                    'model'         => ControleAcordo::class, // Nome do modelo
+                    'model_id'      => $model->id, // ID do registro alterado
+                    'campo'         => $campo, // Nome do campo
+                    'valor_antigo'  => $valorAntigo, // Valor antigo
+                    'valor_novo'    => $valorNovo, // Novo valor
+                    'responsavel'   => Auth::user()->name,
+                ]);
+            }
         }
     }
 }

@@ -54,6 +54,7 @@ return new class extends Migration
             $table->unsignedBigInteger('andamento')->nullable();
             $table->foreign('andamento')->references('id')->on('controle_acordos_andamento_aux');
             $table->text('observacao')->nullable();
+            $table->string('responsavel');
             $table->timestamps();
         });
     }

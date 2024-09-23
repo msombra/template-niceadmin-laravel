@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('campo'); // Nome do campo alterado
             $table->text('valor_antigo')->nullable(); // Valor antigo
             $table->text('valor_novo')->nullable(); // Novo valor
+            $table->string('responsavel'); // Responsável que realizou a alteração
             $table->timestamps();
         });
     }

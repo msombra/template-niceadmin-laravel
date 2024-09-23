@@ -16,7 +16,8 @@
                     info: "Mostrando _START_ a _END_ de _TOTAL_ registros",
                     infoEmpty: "Mostrando 0 a 0 de 0 registros",
                     infoFiltered: "(filtrado de _MAX_ registros totais)",
-                    zeroRecords: "Nenhum registro encontrado"
+                    zeroRecords: "Nenhum registro encontrado",
+                    emptyTable: "Nenhum dado disponível na tabela"
                 },
                 order: [orderBy, 'desc']
             });

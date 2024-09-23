@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('localizador_npj', 11);
             $table->string('contrato', 10);
+            $table->string('responsavel');
             $table->timestamps();
         });
     }

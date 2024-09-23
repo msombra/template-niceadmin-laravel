@@ -14,7 +14,8 @@ class ControleAcordoHistorico extends Model
         'model_id',
         'campo',
         'valor_antigo',
-        'valor_novo'
+        'valor_novo',
+        'responsavel'
     ];
 
     public $table = 'controle_acordos_historico';

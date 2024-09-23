@@ -50,7 +50,8 @@ class ControleAcordo extends Model
         'saldo_devedor_atualizado',
         'percentual_honorarios',
         'andamento',
-        'observacao'
+        'observacao',
+        'responsavel'
     ];
 
     // RELACIONAMENTOS

@@ -3,6 +3,7 @@
 namespace App\Observers;
 
 use App\Models\Contrato;
+use Illuminate\Support\Facades\Auth;
 use App\Models\ControleAcordoHistorico;
 
 class ContratoObserver
@@ -17,13 +18,16 @@ class ContratoObserver
             // dd($valorNovo, $valorAntigo); // debug
 
             // Salva no log
-            ControleAcordoHistorico::create([
-                'model'         => Contrato::class, // Nome do modelo
-                'model_id'      => $model->localizador_npj, // ID do registro alterado
-                'campo'         => 'Contrato', // Nome do campo
-                'valor_antigo'  => $valorAntigo, // Valor antigo
-                'valor_novo'    => $valorNovo, // Novo valor
-            ]);
+            if($campo !== 'responsavel') {
+                ControleAcordoHistorico::create([
+                    'model'         => Contrato::class, // Nome do modelo
+                    'model_id'      => $model->localizador_npj, // ID do registro alterado
+                    'campo'         => 'Contrato', // Nome do campo
+                    'valor_antigo'  => $valorAntigo, // Valor antigo
+                    'valor_novo'    => $valorNovo, // Novo valor
+                    'responsavel'   => Auth::user()->name,
+                ]);
+            }
         }
     }
 }

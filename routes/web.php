@@ -17,13 +17,11 @@ use App\Http\Controllers\ContratoController;
 */
 
 // AUTH
-Route::group(['middleware' => 'guest'], function() {
-    Route::controller(AuthController::class)->group(function() {
-        Route::get('/register', 'register')->name('auth.register');
-        Route::post('/register', 'registerPost')->name('auth.register');
-        Route::get('/login', 'login')->name('auth.login');
-        Route::post('/login', 'loginPost')->name('auth.login');
-    });
+Route::controller(AuthController::class)->group(function() {
+    Route::get('/register', 'register')->name('auth.register');
+    Route::post('/register', 'registerPost')->name('auth.register');
+    Route::get('/login', 'login')->name('auth.login');
+    Route::post('/login', 'loginPost')->name('auth.login');
 });
 
 Route::group(['middleware' => 'auth'], function() {

@@ -144,6 +144,9 @@
         {{-- Observações --}}
         <x-form.textarea :value="$acordo->observacao" label="Observações" name="observacao" col="12" placeholder="Protocolo realizado como processo apenso" />
 
+        {{-- Input Hidden: Responsável --}}
+        <input type="hidden" name="responsavel" id="responsavel" value="{{ Auth::user()->name }}">
+
     </x-form.form-layout>
     {{-- ===== End Form ===== --}}
 
