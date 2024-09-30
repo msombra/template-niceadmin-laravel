@@ -14,6 +14,9 @@
 
         </x-sidebar.menu-dropdown>
 
+        {{-- Usuários --}}
+        <x-sidebar.menu-link item="Usuários" icon="bi bi-people" route="user.index" />
+
     </ul>
 
 </aside>

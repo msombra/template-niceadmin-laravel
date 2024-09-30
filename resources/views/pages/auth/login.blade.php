@@ -10,27 +10,48 @@
         </div>
     @endif
 
-    <form class="row g-3 needs-validation" method="post" action="{{ route('auth.login') }}">
+    <form id="formLogin" class="row g-3" method="post" action="{{ route('auth.login') }}">
         @csrf
 
         <div class="col-12">
             <label for="email" class="form-label">Email</label>
-            <input type="email" name="email" class="form-control" id="email" required>
-            <div class="invalid-feedback">Please enter a valid Email adddress!</div>
+            <input type="email" name="email" class="form-control @if($errors->has('email')) is-invalid @endif" id="email" value="{{ old('email') }}">
+            @include('includes.errors', ['name' => 'email'])
         </div>
 
         <div class="col-12">
             <label for="password" class="form-label">Password</label>
-            <input type="password" name="password" class="form-control" id="password" required>
-            <div class="invalid-feedback">Please enter your password!</div>
+            <input type="password" name="password" class="form-control @if($errors->has('password')) is-invalid @endif" id="password" value="{{ old('password') }}">
+            @include('includes.errors', ['name' => 'password'])
+            <div class="text-end">
+                <a href="{{ route('auth.reset_password') }}" class="fs-13" title="Clique para recuperar sua senha">Esqueceu sua senha?</a>
+            </div>
         </div>
 
         <div class="col-12">
-            <button class="btn btn-primary w-100" type="submit">Entrar</button>
+            <button id="btnLogin" class="btn btn-primary w-100" type="submit">Entrar</button>
         </div>
         <div class="col-12">
             <p class="small mb-0">Não tem conta? <a href="{{ route('auth.register') }}">Registre-se</a></p>
         </div>
     </form>
+
+    @push('js')
+        <script>
+            $(document).ready(function() {
+                $(function() {
+                    $('#formLogin').submit(function(e) {
+                        // e.preventDefault() // debug
+                        let button = $('#btnLogin')
+
+                        button.prop('disabled', true) // desabilita o botão
+                        button.text('Entrando...') // altera o texto do botão
+                        button.removeClass('btn-primary') // remove a cor azul
+                        button.addClass('btn-secondary') // add a cor cinza
+                    })
+                })
+            })
+        </script>
+    @endpush
 
 </x-login.layout>

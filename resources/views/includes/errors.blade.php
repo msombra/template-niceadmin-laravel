@@ -1,4 +1,4 @@
-@if ($isError)
+@if ($errors->has($name))
     @foreach ($errors->get($name) as $e)
         <small class="text-danger fs-13"><i>{{ $e }}</i></small>
     @endforeach

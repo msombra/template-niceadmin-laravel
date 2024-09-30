@@ -1,14 +1,24 @@
-@php
-    $isError = $errors->has($name)
-@endphp
-
 <div class="col-md-{{ $col ?? 2 }}">
 
     {{-- label --}}
     <label for="{{ $name }}" class="form-label custom-label">{{ $label }}</label>
 
     {{-- input --}}
-    <input type="{{ $type }}" name="{{ $name }}" id="{{ $name }}" class="form-control form-control-sm trim @if($isError) is-invalid @endif @isset($numericInput) numeric-input @endisset" value="{{ old($name, $value ?? '') }}" @isset($max) maxlength="{{ $max }}" @endisset>
+    <input
+        type="{{ $type }}"
+        name="{{ $name }}"
+        id="{{ $name }}"
+        value="{{ old($name, $value ?? '') }}"
+        class="
+            form-control
+            form-control-sm
+            trim
+            @if($errors->has($name)) is-invalid @endif
+            @isset($numericInput) numeric-input @endisset
+        "
+        @isset($max) maxlength="{{ $max }}" @endisset
+        @isset($placeholder) placeholder="{{ $placeholder }}" @endisset
+    >
 
     {{-- errors --}}
     @include('includes.errors', ['name' => $name])

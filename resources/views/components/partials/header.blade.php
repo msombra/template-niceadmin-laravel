@@ -30,15 +30,11 @@
                     <li>
                         <form action="{{ route('auth.logout') }}" method="post" class="dropdown-item">
                             @csrf
-                            <button type="submit" class="d-flex align-items-center btn-reset">
+                            <button type="submit" class="d-flex align-items-center btn-reset" style="width:100%">
                                 <i class="bi bi-box-arrow-right"></i>
                                 <span>Sair</span>
                             </button>
                         </form>
-                        {{-- <a class="dropdown-item d-flex align-items-center" href="#">
-                            <i class="bi bi-box-arrow-right"></i>
-                            <span>Sair</span>
-                        </a> --}}
                     </li>
                 </ul>
             </li>
