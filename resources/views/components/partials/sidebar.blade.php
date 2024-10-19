@@ -15,7 +15,10 @@
         </x-sidebar.menu-dropdown>
 
         {{-- Usuários --}}
-        <x-sidebar.menu-link item="Usuários" icon="bi bi-people" route="user.index" />
+        {{-- <x-sidebar.menu-link item="Usuários" icon="bi bi-people" route="user.index" /> --}}
+        @can('admin_only')
+            <x-sidebar.menu-link item="Usuários" icon="bi bi-people" route="user.index" />
+        @endcan
 
     </ul>
 

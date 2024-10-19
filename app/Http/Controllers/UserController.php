@@ -5,19 +5,31 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Mail\DefinirSenhaMail;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller
 {
+    // Se o usuário logado não for admin vai retornar a página de não autorizado
+    private function permissionRule() {
+        if(Gate::denies('admin_only')) {
+            return abort(403, 'ACESSO NÃO AUTORIZADO');
+        }
+    }
+
     public function index()
     {
         $users = User::all();
+
+        $this->permissionRule();
 
         return view('pages.user.user_index', compact('users'));
     }
 
     public function create()
     {
+        $this->permissionRule();
+
         return view('pages.user.user_create');
     }
 
@@ -35,6 +47,8 @@ class UserController extends Controller
         $user = User::find($id);
 
         if(!$user) return back();
+
+        $this->permissionRule();
 
         return view('pages.user.user_edit', compact('user'));
     }
