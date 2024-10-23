@@ -39,6 +39,90 @@
 
 @push('js')
     <script>
+        // Função que vai carregar os contratos na tabela
+        function carregaContratos() {
+            $.ajax({
+                type: "GET",
+                url: "{{ route('contrato.list') }}",
+                success: function(data) {
+                    // console.log(data)
+                    let localizadorNpj = $('#localizador_npj').val()
+                    let contratos = data.contratos.filter(item => item.localizador_npj === localizadorNpj)
+                    let qtdContratos = contratos.length
+                    let btnContratos = $('#btnContratos')
+                    let table = $('#contratoTable')
+
+                    $('#qtdContratos').text(qtdContratos)
+                    table.empty()
+
+                    // se tiver contratos faça o corpo da tabela
+                    if(qtdContratos > 0) {
+                        for(let i=0; i < qtdContratos; i++) {
+                            table.append(`
+                                <tr>
+                                    <td>${(contratos[i]['contrato'])}</td>
+                                    <td class='text-center'>
+                                        <div class="d-flex justify-content-center align-items-center">
+
+                                            <button type="button" class="contrato-edit btn-reset text-primary fs-6" title="Clique para editar o contrato" onclick="editaContrato(${(contratos[i]['id'])}, ${(contratos[i]['contrato'])})">
+                                                <i class="fa fa-pencil"></i>
+                                            </button>
+
+                                            <button type="button" class="contrato-delete btn-reset text-danger fs-6" title="Clique para remover o contrato" onclick="deletaContrato(${(contratos[i]['id'])})">
+                                                    <i class="fa fa-minus-circle"></i>
+                                            </button>
+
+                                        </div>
+                                    </td>
+                                </tr>
+                            `)
+                        }
+
+                        // muda a cor do botão
+                        btnContratos.removeClass('btn-secondary').addClass('btn-success')
+                    }
+                    // se não, exiba essa mensagem
+                    else {
+                        table.append("<tr><td colspan='2'>Não existe contrato cadastrado.</td></tr>")
+
+                        // reverte a cor do botão
+                        if(btnContratos.hasClass('btn-success')) {
+                            btnContratos.removeClass('btn-success').addClass('btn-secondary')
+                        }
+                    }
+                }
+            })
+        }
+
+        // Função que vai realizar a atualização de um contrato
+        function editaContrato(id, contrato) {
+            $('#contrato').val(contrato).focus()
+            $('#idContrato').val(id)
+            $('#contratoSubmitText').text('Editar')
+        }
+
+        // Função que vai deletar um contrato
+        function deletaContrato(id) {
+            if(confirm('Deseja remover esse contrato?')) {
+                $.ajax({
+                    type: "POST",
+                    url: "{{ route('contrato.destroy') }}",
+                    data: {
+                        id: id,
+                        _token: $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function(data) {
+                        // console.log(data)
+                        carregaContratos()
+                    },
+                    error: function(err) {
+                        console.error(err.responseText)
+                        carregaContratos()
+                    }
+                })
+            }
+        }
+
         $(document).ready(function() {
             $(function() {
                 // Lógica para habilitar/desabilitar botão que abre a modal dos contratos
@@ -59,61 +143,6 @@
                 $('#localizador_npj').on('input', function() {
                     habilitaBtnContratos()
                 })
-
-                // Função que vai carregar os contratos na tabela
-                function carregaContratos() {
-                    $.ajax({
-                        type: "GET",
-                        url: "{{ route('contrato.list') }}",
-                        success: function(data) {
-                            // console.log(data)
-                            let localizadorNpj = $('#localizador_npj').val()
-                            let contratos = data.contratos.filter(item => item.localizador_npj === localizadorNpj)
-                            let qtdContratos = contratos.length
-                            let btnContratos = $('#btnContratos')
-                            let table = $('#contratoTable')
-
-                            $('#qtdContratos').text(qtdContratos)
-                            table.empty()
-
-                            // se tiver contratos faça o corpo da tabela
-                            if(qtdContratos > 0) {
-                                for(let i=0; i < qtdContratos; i++) {
-                                    table.append(`
-                                        <tr>
-                                            <td>${(contratos[i]['contrato'])}</td>
-                                            <td class='text-center'>
-                                                <div class="d-flex justify-content-center align-items-center">
-
-                                                    <button type="button" data-id="${(contratos[i]['id'])}" data-contrato="${(contratos[i]['contrato'])}" class="contrato-edit btn-reset text-primary fs-6" title="Clique para editar o contrato">
-                                                        <i class="fa fa-pencil"></i>
-                                                    </button>
-
-                                                    <button type="button" data-id="${(contratos[i]['id'])}" class="contrato-delete btn-reset text-danger fs-6" title="Clique para remover o contrato">
-                                                            <i class="fa fa-minus-circle"></i>
-                                                    </button>
-
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    `)
-                                }
-
-                                // muda a cor do botão
-                                btnContratos.removeClass('btn-secondary').addClass('btn-success')
-                            }
-                            // se não, exiba essa mensagem
-                            else {
-                                table.append("<tr><td colspan='2'>Não existe contrato cadastrado.</td></tr>")
-
-                                // reverte a cor do botão
-                                if(btnContratos.hasClass('btn-success')) {
-                                    btnContratos.removeClass('btn-success').addClass('btn-secondary')
-                                }
-                            }
-                        }
-                    })
-                }
 
                 carregaContratos()
 
@@ -212,49 +241,49 @@
                     }
                 })
 
-                setInterval(() => {
-                    let contratoEdit = $('.contrato-edit')
-                    let contratoDelete = $('.contrato-delete')
+                // setInterval(() => {
+                //     let contratoEdit = $('.contrato-edit')
+                //     let contratoDelete = $('.contrato-delete')
 
-                    // Evento clique do botão de editar
-                    if(contratoEdit) {
-                        contratoEdit.off('click').click(function() {
-                            let id = $(this).data('id')
-                            let contrato = $(this).data('contrato')
+                //     // Evento clique do botão de editar
+                //     if(contratoEdit) {
+                //         contratoEdit.off('click').click(function() {
+                //             let id = $(this).data('id')
+                //             let contrato = $(this).data('contrato')
 
-                            $('#contrato').val(contrato).focus()
-                            $('#idContrato').val(id)
-                            $('#contratoSubmitText').text('Editar')
-                        })
-                    }
+                //             $('#contrato').val(contrato).focus()
+                //             $('#idContrato').val(id)
+                //             $('#contratoSubmitText').text('Editar')
+                //         })
+                //     }
 
-                    // DELETE
-                    if(contratoDelete) {
-                        contratoDelete.off('click').click(function() {
-                            let id = $(this).data('id')
-                            let token = $('meta[name="csrf-token"]').attr('content')
+                //     // DELETE
+                //     if(contratoDelete) {
+                //         contratoDelete.off('click').click(function() {
+                //             let id = $(this).data('id')
+                //             let token = $('meta[name="csrf-token"]').attr('content')
 
-                            if(confirm('Deseja remover esse contrato?')) {
-                                $.ajax({
-                                    type: "POST",
-                                    url: "{{ route('contrato.destroy') }}",
-                                    data: {
-                                        id: id,
-                                        _token: token
-                                    },
-                                    success: function(data) {
-                                        // console.log(data)
-                                        carregaContratos()
-                                    },
-                                    error: function(err) {
-                                        console.error(err.responseText)
-                                        carregaContratos()
-                                    }
-                                })
-                            }
-                        })
-                    }
-                }, 1000)
+                //             if(confirm('Deseja remover esse contrato?')) {
+                //                 $.ajax({
+                //                     type: "POST",
+                //                     url: "{{ route('contrato.destroy') }}",
+                //                     data: {
+                //                         id: id,
+                //                         _token: token
+                //                     },
+                //                     success: function(data) {
+                //                         // console.log(data)
+                //                         carregaContratos()
+                //                     },
+                //                     error: function(err) {
+                //                         console.error(err.responseText)
+                //                         carregaContratos()
+                //                     }
+                //                 })
+                //             }
+                //         })
+                //     }
+                // }, 1000)
                 // ========== FIM CRUD AJAX ==========
             })
         })
