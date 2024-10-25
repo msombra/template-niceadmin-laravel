@@ -4,16 +4,16 @@
     <x-form.form-layout action="drc.update" :data-id="$acordo->id" route-list="drc.list">
 
         {{-- Localizador (NPJ) --}}
-        <x-form.input :value="$acordo->localizador_npj" label="Localizador (NPJ)" name="localizador_npj" type="text" numeric-input />
+        <x-form.input :value="$acordo->localizador_npj" label="Localizador (NPJ)" name="localizador_npj" type="text" max="11" numeric-input />
 
         {{-- Adverso Principal --}}
         <x-form.input :value="$acordo->adverso_principal" label="Adverso Principal" name="adverso_principal" type="text" col="5" />
 
         {{-- CPF/CNPJ --}}
-        <x-form.input :value="$acordo->cpf_cnpj" label="CPF/CNPJ" name="cpf_cnpj" type="text" col="3" />
+        <x-form.input :value="$acordo->cpf_cnpj" label="CPF/CNPJ" name="cpf_cnpj" type="text" max="18" col="3" />
 
         {{-- MCI --}}
-        <x-form.input :value="$acordo->mci" label="MCI" name="mci" type="text" numeric-input />
+        <x-form.input :value="$acordo->mci" label="MCI" name="mci" type="text" max="9" numeric-input />
 
         {{-- UF --}}
         <x-form.select label="UF" :name="$name = 'uf'">
@@ -29,10 +29,10 @@
         </x-form.select>
 
         {{-- GECOR --}}
-        <x-form.input :value="$acordo->gecor" label="GECOR" name="gecor" type="text" numeric-input />
+        <x-form.input :value="$acordo->gecor" label="GECOR" name="gecor" type="text" max="4" numeric-input />
 
         {{-- Prefixo (Dep.) --}}
-        <x-form.input :value="$acordo->prefixo_dependencia" label="Prefixo (Dep.)" name="prefixo_dependencia" type="text" numeric-input />
+        <x-form.input :value="$acordo->prefixo_dependencia" label="Prefixo (Dep.)" name="prefixo_dependencia" type="text" max="4" numeric-input />
 
         {{-- Tipo Recuperação --}}
         <x-form.select label="Tipo Recuperação" :name="$name = 'tipo_recuperacao'" col="3">
@@ -49,13 +49,13 @@
         </x-form.select>
 
         {{-- Rastreamento --}}
-        <x-form.input :value="$acordo->rastreamento" label="Rastreamento" name="rastreamento" type="text" numeric-input />
+        <x-form.input :value="$acordo->rastreamento" label="Rastreamento" name="rastreamento" type="text" max="14" numeric-input />
 
         {{-- Documentos Classificados --}}
         <x-form.select label="Docs. Classificados" :name="$name = 'documentos_classificados'" :type-bool="$acordo->documentos_classificados" />
 
         {{-- Nº Compromisso --}}
-        <x-form.input :value="$acordo->num_compromisso" label="Nº Compromisso" name="num_compromisso" type="text" numeric-input />
+        <x-form.input :value="$acordo->num_compromisso" label="Nº Compromisso" name="num_compromisso" type="text" max="12" numeric-input />
 
         {{-- Condutor --}}
         <x-form.select label="Condutor" :name="$name = 'condutor'">
@@ -100,10 +100,10 @@
         <x-form.input :value="$acordo->data_envio_subsidio" label="Data Envio Subsídio" name="data_envio_subsidio" type="date" col="3" />
 
         {{-- Dep. Receptora --}}
-        <x-form.input :value="$acordo->dependencia_receptora" label="Dep. Receptora" name="dependencia_receptora" type="text" />
+        <x-form.input :value="$acordo->dependencia_receptora" label="Dep. Receptora" name="dependencia_receptora" type="text" max="14" numeric-input />
 
         {{-- Formulário Rateio --}}
-        <x-form.input :value="$acordo->formulario_rateio" label="Formulário Rateio" name="formulario_rateio" type="text" />
+        <x-form.input :value="$acordo->formulario_rateio" label="Formulário Rateio" name="formulario_rateio" type="text" max="14" numeric-input />
 
         {{-- Periodicidade --}}
         <x-form.select label="Periodicidade" :name="$name = 'periodicidade'">

@@ -44,6 +44,26 @@ $(document).ready(function() {
 
             $(this).val(value)
         })
+
+        $('.numeric-input').bind('paste', function(e) {
+            // Intercepta a colagem
+            e.preventDefault()
+
+            // Obtém o valor
+            let pastedData = e.originalEvent.clipboardData.getData('text')
+
+            // Remove os espaços e os caracteres que não sejam números
+            let cleanData = pastedData.replace(/[^0-9]/g, '')
+
+            // Obtém o maxlength do input
+            let inputMaxlength = $(this).attr('maxlength')
+
+            // Respeita o maxlength do input
+            let finalValue = cleanData.substring(0, inputMaxlength)
+
+            // Adiciona o valor tratado no input
+            $(this).val(finalValue)
+        })
     })
 
     // aplica máscara cpf ou cnpj
@@ -59,6 +79,26 @@ $(document).ready(function() {
                 $(this).mask('###.###.###-##')
             }
         })//.trigger('input')
+
+        $('#cpf_cnpj').bind('paste', function(e) {
+            // Intercepta a colagem
+            e.preventDefault()
+
+            // Obtém o valor
+            let pastedData = e.originalEvent.clipboardData.getData('text')
+
+            // Remove os espaços e os caracteres que não sejam números
+            let cleanData = pastedData.trim()
+
+            // Obtém o maxlength do input
+            let inputMaxlength = $(this).attr('maxlength')
+
+            // Respeita o maxlength do input
+            let finalValue = cleanData.substring(0, inputMaxlength)
+
+            // Adiciona o valor tratado no input
+            $(this).val(finalValue)
+        })
     })
 
     // aplica máscara monetária
