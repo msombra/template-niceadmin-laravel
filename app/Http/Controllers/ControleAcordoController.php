@@ -38,7 +38,7 @@ class ControleAcordoController extends Controller
                     return $acordo->tipoRecuperacaoAux ? $acordo->tipoRecuperacaoAux->nome : 'N/A';
                 })
                 ->editColumn('updated_at', function($acordo) {
-                    return Carbon::parse($acordo->updated_at)->format('d/m/Y');
+                    return Carbon::parse($acordo->updated_at)->format('d/m/Y H:i');
                 })
                 ->addColumn('acoes', function($acordo) {
                     return '
