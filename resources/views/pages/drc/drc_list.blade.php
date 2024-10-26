@@ -26,46 +26,66 @@
                 <th class="text-center">Ações</th>
             </tr>
         </thead>
-        <tbody>
-            @foreach ($acordos as $acordo)
-                <tr>
-                    <td class="text-start">{{ $acordo->localizador_npj }}</td>
-                    <td>{{ $acordo->tipoRecuperacaoAux->nome }}</td>
-                    <td class="txt-wrap">{{ $acordo->adverso_principal }}</td>
-                    <td class="text-center">{{ $acordo->mci }}</td>
-                    {{-- <td class="text-center">0</td> --}}
-                    <td class="txt-wrap">{{ $acordo->responsavel }}</td>
-                    <td class="text-start">{{ date("d/m/Y H:i", strtotime($acordo->updated_at)) }}</td>
-                    {{-- Ações --}}
-                    <x-button.actions route="drc" :data-id="$acordo->id" btn-show />
-                </tr>
-            @endforeach
-        </tbody>
     </table>
 
     {{-- Plugins --}}
-    @include('includes.datatable')
+    {{-- @include('includes.datatable') --}}
     @include('includes.toasts')
+
+    @push('plugin_css')
+        <link href="{{ asset('plugins/DataTables/datatables.min.css') }}" rel="stylesheet">
+    @endpush
 
     {{-- Script --}}
     @push('js')
+        <script src="{{ asset('plugins/DataTables/datatables.min.js') }}"></script>
         <script>
             $(document).ready(function() {
+                // ---  ---
+                $(function() {
+                    $('.datatable').DataTable({
+                        serverSide: true,
+                        ajax: "{{ route('drc.getAcordosDrc') }}",
+                        columns: [
+                            { data: 'localizador_npj' },
+                            { data: 'tipo_recuperacao' },
+                            { data: 'adverso_principal', className: 'txt-wrap' },
+                            { data: 'mci' },
+                            { data: 'responsavel', className: 'txt-wrap' },
+                            { data: 'updated_at', type: 'date' },
+                            { data: 'acoes', orderable: false, searchable: false },
+                        ],
+                        language: {
+                            lengthMenu: "Mostrar _MENU_ registros por página",
+                            search: "Pesquisar:",
+                            info: "Mostrando _START_ a _END_ de _TOTAL_ registros",
+                            infoEmpty: "Mostrando 0 a 0 de 0 registros",
+                            infoFiltered: "(filtrado de _MAX_ registros totais)",
+                            zeroRecords: "Nenhum registro encontrado",
+                            emptyTable: "Nenhum dado disponível na tabela",
+                            loadingRecords: "Carregando acordos..."
+                        },
+                        // order: [orderBy, 'desc']
+                    })
+                })
+
                 // --- Regras no botão de exportar planilha ---
-                $('#exportBtn').submit(function(e) {
-                    // e.preventDefault()
-                    let btn = $(this).find('button')
-                    let btnText = $('#exportBtnText')
-                    let spinner = $('#exportBtnSpinner')
+                $(function() {
+                    $('#exportBtn').submit(function(e) {
+                        // e.preventDefault()
+                        let btn = $(this).find('button')
+                        let btnText = $('#exportBtnText')
+                        let spinner = $('#exportBtnSpinner')
 
-                    btn.prop('disabled', true) // aplica disabled no botão
-                    btnText.text('Exportando...') // altera o texto do botão
-                    spinner.removeClass('d-none') // mostra um spinner no botão
+                        btn.prop('disabled', true) // aplica disabled no botão
+                        btnText.text('Exportando...') // altera o texto do botão
+                        spinner.removeClass('d-none') // mostra um spinner no botão
 
-                    // recarrega a página logo após a execução do evento
-                    setTimeout(() => {
-                        location.reload();
-                    }, 500)
+                        // recarrega a página logo após a execução do evento
+                        setTimeout(() => {
+                            location.reload();
+                        }, 500)
+                    })
                 })
             })
         </script>

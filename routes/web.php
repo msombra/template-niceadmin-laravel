@@ -41,6 +41,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::controller(ControleAcordoController::class)->group(function() {
         // list
         Route::get('/drc_list', 'list')->name('drc.list');
+        Route::get('/get_acordos', 'getAcordosDrc')->name('drc.getAcordosDrc');
         // create
         Route::get('/drc_create', 'create')->name('drc.create');
         Route::post('/drc_store', 'store')->name('drc.store');

@@ -16,6 +16,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Models\Auxiliares\Classificacao;
 use App\Models\Auxiliares\FormaPagamento;
 use App\Models\Auxiliares\TipoRecuperacao;
+use Illuminate\Support\Carbon;
 
 class ControleAcordoController extends Controller
 {
@@ -24,9 +25,38 @@ class ControleAcordoController extends Controller
     // =====================================================
     public function list()
     {
-        $acordos = ControleAcordo::with('tipoRecuperacaoAux')->get();
+        return view('pages.drc.drc_list');
+    }
 
-        return view('pages.drc.drc_list', compact('acordos'));
+    public function getAcordosDrc(Request $request)
+    {
+        if($request->ajax()) {
+            $acordos = ControleAcordo::with('tipoRecuperacaoAux')->orderBy('updated_at', 'desc');
+
+            return datatables()->of($acordos)
+                ->addColumn('tipo_recuperacao', function($acordo) {
+                    return $acordo->tipoRecuperacaoAux ? $acordo->tipoRecuperacaoAux->nome : 'N/A';
+                })
+                ->editColumn('updated_at', function($acordo) {
+                    return Carbon::parse($acordo->updated_at)->format('d/m/Y');
+                })
+                ->addColumn('acoes', function($acordo) {
+                    return '
+                        <div class="d-flex justify-content-center align-items-center">
+                            <a href="' . route("drc.show", $acordo->id) . '" class="btn btn-sm btn-warning shadow-sm" title="Visualizar registro"><i class="bi bi-eye-fill"></i></a>
+                            <a href="' . route("drc.edit", $acordo->id) . '" class="btn btn-sm btn-success shadow-sm mx-1" title="Editar registro"><i class="fa fa-pencil-square-o"></i></a>
+                            <form action="' . route("drc.destroy", $acordo->id) . '" method="post">
+                                '.csrf_field().'
+                                <input type="hidden" name="_method" value="DELETE">
+                                <button type="submit" class="btn btn-sm btn-danger shadow-sm" title="Deletar registro" onclick="return confirm(\'Deseja excluir esse registro?\')">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </form>
+                        </div>
+                    ';
+                })->rawColumns(['acoes'])
+                ->make(true);
+        }
     }
 
 
