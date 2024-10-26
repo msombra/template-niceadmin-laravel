@@ -1,7 +1,7 @@
 <div class="col-md-{{ $col ?? 2 }}">
 
     {{-- label --}}
-    <label for="{{ $name }}" class="form-label custom-label">{{ $label }}</label>
+    <label for="{{ $name }}" class="form-label custom-label">{{ $label }} @isset($required) <span class="text-danger">*</span> @endisset</label>
 
     {{-- input --}}
     <input

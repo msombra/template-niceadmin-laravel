@@ -4,19 +4,19 @@
     <x-form.form-layout action="drc.store" route-list="drc.list">
 
         {{-- Localizador (NPJ) --}}
-        <x-form.input label="Localizador (NPJ)" name="localizador_npj" type="text" max="11" numeric-input />
+        <x-form.input label="Localizador (NPJ)" name="localizador_npj" type="text" max="11" required numeric-input />
 
         {{-- Adverso Principal --}}
-        <x-form.input label="Adverso Principal" name="adverso_principal" type="text" col="5" />
+        <x-form.input label="Adverso Principal" name="adverso_principal" type="text" required col="5" />
 
         {{-- CPF/CNPJ --}}
-        <x-form.input label="CPF/CNPJ" name="cpf_cnpj" type="text" max="18" col="3" />
+        <x-form.input label="CPF/CNPJ" name="cpf_cnpj" type="text" max="18" required col="3" />
 
         {{-- MCI --}}
-        <x-form.input label="MCI" name="mci" type="text" max="9" numeric-input />
+        <x-form.input label="MCI" name="mci" type="text" max="9" required numeric-input />
 
         {{-- UF --}}
-        <x-form.select label="UF" :name="$name = 'uf'">
+        <x-form.select label="UF" :name="$name = 'uf'" required>
             @foreach ($estados as $uf)
                 <x-form.option :value="$uf->id" :option="$uf->sigla" :name="$name" />
             @endforeach
@@ -35,24 +35,24 @@
         <x-form.input label="Prefixo (Dep.)" name="prefixo_dependencia" type="text" max="4" numeric-input />
 
         {{-- Tipo Recuperação --}}
-        <x-form.select label="Tipo Recuperação" :name="$name = 'tipo_recuperacao'" col="3">
+        <x-form.select label="Tipo Recuperação" :name="$name = 'tipo_recuperacao'" col="3" required>
             @foreach ($tipo_recuperacao as $tp)
                 <x-form.option :value="$tp->id" :option="$tp->nome" :name="$name" />
             @endforeach
         </x-form.select>
 
         {{-- Classificação --}}
-        <x-form.select label="Classificação" :name="$name = 'classificacao'" col="4">
+        <x-form.select label="Classificação" :name="$name = 'classificacao'" col="4" required>
             @foreach ($classificacao as $cf)
                 <x-form.option :value="$cf->id" :option="$cf->nome" :name="$name" />
             @endforeach
         </x-form.select>
 
         {{-- Rastreamento --}}
-        <x-form.input label="Rastreamento" name="rastreamento" type="text" max="14" numeric-input />
+        <x-form.input label="Rastreamento" name="rastreamento" type="text" max="14" required numeric-input />
 
         {{-- Documentos Classificados --}}
-        <x-form.select label="Docs. Classificados" :name="$name = 'documentos_classificados'" type-bool />
+        <x-form.select label="Docs. Classificados" :name="$name = 'documentos_classificados'" required type-bool />
 
         {{-- Nº Compromisso --}}
         <x-form.input label="Nº Compromisso" name="num_compromisso" type="text" max="12" numeric-input />
@@ -75,7 +75,7 @@
         <x-form.input-money label="Valor Honorários" name="valor_honorarios" />
 
         {{-- Valor Recuperação --}}
-        <x-form.input-money label="Valor Recuperação" name="valor_recuperacao" />
+        <x-form.input-money label="Valor Recuperação" name="valor_recuperacao" required />
 
         {{-- Status --}}
         <x-form.select label="Status" :name="$name = 'status'" col="5">
