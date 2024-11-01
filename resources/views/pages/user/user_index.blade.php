@@ -12,7 +12,7 @@
                 <th class="text-center order-by">ID</th>
                 <th class="text-center">Nome</th>
                 <th class="text-center">Email</th>
-                <th class="text-center">Status</th>
+                <th class="text-center">Tipo</th>
                 <th class="text-center">Ações</th>
             </tr>
         </thead>
@@ -22,7 +22,7 @@
                     <td class="text-start">{{ $user->id }}</td>
                     <td class="txt-wrap">{{ $user->name }}</td>
                     <td class="txt-wrap">{{ $user->email }}</td>
-                    <td class="txt-wrap">{{ $user->status }}</td>
+                    <td class="txt-wrap">{{ $user->nivel }}</td>
                     <x-button.actions route="user" :data-id="$user->id" />
                 </tr>
             @endforeach
