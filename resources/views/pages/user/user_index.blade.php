@@ -23,7 +23,14 @@
                     <td class="txt-wrap">{{ $user->name }}</td>
                     <td class="txt-wrap">{{ $user->email }}</td>
                     <td class="txt-wrap">{{ $user->nivel }}</td>
-                    <x-button.actions route="user" :data-id="$user->id" />
+                    <td class="class-center">
+                        @can('super_user')
+                            <x-button.actions route="user" :data-id="$user->id" />
+                        @endcan
+                        @if (Auth::user()->nivel === 'admin' && $user->nivel !== 'super')
+                            <x-button.actions route="user" :data-id="$user->id" />
+                        @endif
+                    </td>
                 </tr>
             @endforeach
         </tbody>

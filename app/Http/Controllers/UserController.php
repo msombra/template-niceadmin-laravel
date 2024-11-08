@@ -50,6 +50,10 @@ class UserController extends Controller
 
         $this->permissionRule();
 
+        if($user->nivel === 'super' && auth()->user()->nivel === 'admin') {
+            return abort(403, 'ACESSO NÃO AUTORIZADO');
+        }
+
         return view('pages.user.user_edit', compact('user'));
     }
 
