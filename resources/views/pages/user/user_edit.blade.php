@@ -13,7 +13,9 @@
         <x-form.select label="Tipo Usuário" :name="$name = 'nivel'" col="3">
             <x-form.option :data="$user->nivel" value="comum" option="Comum" :name="$name" />
             <x-form.option :data="$user->nivel" value="admin" option="Admin" :name="$name" />
-            <x-form.option :data="$user->nivel" value="super" option="Super" :name="$name" />
+            @can('super_user')
+                <x-form.option :data="$user->nivel" value="super" option="Super" :name="$name" />
+            @endcan
         </x-form.select>
 
     </x-form.form-layout>

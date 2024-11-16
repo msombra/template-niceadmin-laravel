@@ -5,6 +5,12 @@
         <a href="{{ route('user.create') }}" class="btn btn-sm btn-primary shadow-sm">Adicionar Novo Usuário</a>
     </div>
 
+    @if (session('error_delete'))
+        <div class="alert alert-danger fs-13 text-center">
+            <b>{{ session('error_delete') }}</b>
+        </div>
+    @endif
+
     {{-- Tabela --}}
     <table id="userTable" class="table table-hover text-nowrap text-center datatable" style="width: 100%; cursor: default;">
         <thead>

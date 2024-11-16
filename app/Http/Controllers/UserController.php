@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Mail\DefinirSenhaMail;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Mail;
 
@@ -74,7 +75,13 @@ class UserController extends Controller
 
         if(!$user) return back();
 
-        $user->delete();
+        $userLogado = Auth::user()->email;
+
+        if($userLogado == $user->email) {
+            return back()->with('error_delete', 'Não é possível excluir a própria conta, por favor entre em contato com o suporte.');
+        } else {
+            $user->delete();
+        }
 
         return redirect()->route('user.index')->with('success', 'Usuário removido com sucesso.');
     }
