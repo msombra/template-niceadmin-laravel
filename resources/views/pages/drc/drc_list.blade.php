@@ -37,7 +37,9 @@
                     <td class="txt-wrap">{{ $acordo->responsavel }}</td>
                     <td class="text-start">{{ date("d/m/Y H:i", strtotime($acordo->updated_at)) }}</td>
                     {{-- Ações --}}
-                    <x-button.actions route="drc" :data-id="$acordo->id" btn-show />
+                    <td class="text-class">
+                        <x-button.actions route="drc" :data-id="$acordo->id" btn-show />
+                    </td>
                 </tr>
             @endforeach
         </tbody>
