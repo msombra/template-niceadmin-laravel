@@ -1,4 +1,4 @@
-<td class="text-center">
+{{-- <td class="text-center"> --}}
     <div class="d-flex justify-content-center align-items-center">
         {{-- VIEW --}}
         @isset($btnShow) {{-- condição se existir o botão de view na listagem --}}
@@ -15,4 +15,4 @@
             </button>
         </form>
     </div>
-</td>
+{{-- </td> --}}
